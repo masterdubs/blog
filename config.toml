@@ -1,0 +1,15 @@
+baseURL = 'http://example.org/'
+languageCode = 'en-us'
+title = 'Dubs blog'
+theme = "hugo-theme-monochrome"
+#googleAnalytics = "xxx"
+
+[params]
+footer = "Copyright © 2021 by Dubs"
+enableCollapsibleTOC = true
+enableSiteSearch = true
+
+
+
+[build]
+  writeStats = true
