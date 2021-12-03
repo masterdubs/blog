@@ -1,4 +1,46 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Dubs blog</title><link>https://masterdubs.com/posts/</link><description>Recent content in Posts on Dubs blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 03 Dec 2021 10:38:00 +0400</lastBuildDate><atom:link href="https://masterdubs.com/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Firewalld Rocky Linux</title><link>https://masterdubs.com/posts/firewalld-rocky-linux/</link><pubDate>Fri, 03 Dec 2021 10:38:00 +0400</pubDate><guid>https://masterdubs.com/posts/firewalld-rocky-linux/</guid><description>&lt;h1 id="setup-firewalld-with-rocky-linux-8-and-limit-by-zone">Setup Firewalld with Rocky Linux 8 and limit by zone&lt;/h1>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Dubs blog</title><link>https://masterdubs.com/posts/</link><description>Recent content in Posts on Dubs blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 03 Dec 2021 13:23:23 +0400</lastBuildDate><atom:link href="https://masterdubs.com/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Install and Configure Fail2ban Rocky Linux</title><link>https://masterdubs.com/posts/install-and-configure-fail2ban-rocky-linux/</link><pubDate>Fri, 03 Dec 2021 13:23:23 +0400</pubDate><guid>https://masterdubs.com/posts/install-and-configure-fail2ban-rocky-linux/</guid><description>&lt;h1 id="install-and-configure-fali2ban-on-rocky-linux-8">Install and configure Fali2ban on Rocky Linux 8&lt;/h1>
+&lt;blockquote>
+&lt;p>&lt;em>&lt;strong>Run all commands bellow as root&lt;/strong>&lt;/em>&lt;/p>
+&lt;/blockquote>
+&lt;h3 id="firewall">Firewall&lt;/h3>
+&lt;p>Enable and start firewalld:&lt;/p>
+&lt;p>&lt;code>systemctl enable firewalld &amp;amp;&amp;amp; service firewalld start&lt;/code>&lt;/p>
+&lt;h3 id="install-fail2ban">Install Fail2ban&lt;/h3>
+&lt;pre tabindex="0">&lt;code>dnf install -y epel-release
+dnf install -y fail2ban fail2ban-firewalld
+&lt;/code>&lt;/pre>&lt;p>Start and enable:&lt;/p>
+&lt;pre tabindex="0">&lt;code>systemctl start fail2ban
+systemctl enable fail2ban
+&lt;/code>&lt;/pre>&lt;p>Check if fail2ban is running:&lt;/p>
+&lt;pre tabindex="0">&lt;code>systemctl status fail2ban
+&lt;/code>&lt;/pre>&lt;h3 id="configure-ssh-jail">Configure ssh jail&lt;/h3>
+&lt;pre tabindex="0">&lt;code>cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
+mv /etc/fail2ban/jail.d/00-firewalld.conf /etc/fail2ban/jail.d/00-firewalld.local
+&lt;/code>&lt;/pre>&lt;p>edit configuration for sshd&lt;/p>
+&lt;pre tabindex="0">&lt;code>vi /etc/fail2ban/jail.d/sshd.local
+&lt;/code>&lt;/pre>&lt;p>put the following in it:&lt;/p>
+&lt;pre tabindex="0">&lt;code>[sshd]
+enabled = true
+bantime = 1d
+maxretry = 3
+&lt;/code>&lt;/pre>&lt;p>Restart and enable the jail:&lt;/p>
+&lt;pre tabindex="0">&lt;code>systemctl restart fail2ban
+&lt;/code>&lt;/pre>&lt;p>Check if the jail is working:&lt;/p>
+&lt;pre tabindex="0">&lt;code>fail2ban-client status sshd
+&lt;/code>&lt;/pre>&lt;p>It will output something like this:&lt;/p>
+&lt;pre tabindex="0">&lt;code>Status for the jail: sshd
+|- Filter
+| |- Currently failed: 1
+| |- Total failed: 20
+| `- Journal matches: _SYSTEMD_UNIT=sshd.service + _COMM=sshd
+`- Actions
+|- Currently banned: 2
+|- Total banned: 2
+`- Banned IP list: 49.88.112.73 120.133.56.246
+&lt;/code>&lt;/pre>&lt;h3 id="unban-an-ip">Unban an IP&lt;/h3>
+&lt;p>If you need to unban an IP for any reason:&lt;/p>
+&lt;pre tabindex="0">&lt;code>fail2ban-client unban THE_IP_TO_UNBAN
+&lt;/code>&lt;/pre></description></item><item><title>Firewalld Rocky Linux</title><link>https://masterdubs.com/posts/firewalld-rocky-linux/</link><pubDate>Fri, 03 Dec 2021 10:38:00 +0400</pubDate><guid>https://masterdubs.com/posts/firewalld-rocky-linux/</guid><description>&lt;h1 id="setup-firewalld-with-rocky-linux-8-and-limit-by-zone">Setup Firewalld with Rocky Linux 8 and limit by zone&lt;/h1>
 &lt;h3 id="create-a-new-zone-">Create a new zone :&lt;/h3>
 &lt;pre tabindex="0">&lt;code>firewall-cmd --new-zone=myzone --permanent
 firewall-cmd --reload

@@ -2,14 +2,28 @@
 <meta charset=utf-8>
 <link rel="shortcut icon" href=https://masterdubs.com/favicon.ico type=image/x-icon>
 <meta name=viewport content="width=device-width,initial-scale=1">
-<title>Posts - Dubs blog</title>
-<meta property="og:title" content="Posts">
-<meta property="og:description" content>
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://masterdubs.com/posts/">
+<title>Install and Configure Fail2ban Rocky Linux - Dubs blog</title>
+<meta property="og:title" content="Install and Configure Fail2ban Rocky Linux">
+<meta property="og:description" content="Install and configure Fali2ban on Rocky Linux 8  Run all commands bellow as root
+ Firewall Enable and start firewalld:
+systemctl enable firewalld && service firewalld start
+Install Fail2ban dnf install -y epel-release dnf install -y fail2ban fail2ban-firewalld Start and enable:
+systemctl start fail2ban systemctl enable fail2ban Check if fail2ban is running:
+systemctl status fail2ban Configure ssh jail cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local mv /etc/fail2ban/jail.d/00-firewalld.conf /etc/fail2ban/jail.d/00-firewalld.local edit configuration for sshd
+vi /etc/fail2ban/jail.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://masterdubs.com/posts/install-and-configure-fail2ban-rocky-linux/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2021-12-03T13:23:23+04:00">
+<meta property="article:modified_time" content="2021-12-03T13:23:23+04:00">
 <meta name=twitter:card content="summary">
-<meta name=twitter:title content="Posts">
-<meta name=twitter:description content>
+<meta name=twitter:title content="Install and Configure Fail2ban Rocky Linux">
+<meta name=twitter:description content="Install and configure Fali2ban on Rocky Linux 8  Run all commands bellow as root
+ Firewall Enable and start firewalld:
+systemctl enable firewalld && service firewalld start
+Install Fail2ban dnf install -y epel-release dnf install -y fail2ban fail2ban-firewalld Start and enable:
+systemctl start fail2ban systemctl enable fail2ban Check if fail2ban is running:
+systemctl status fail2ban Configure ssh jail cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local mv /etc/fail2ban/jail.d/00-firewalld.conf /etc/fail2ban/jail.d/00-firewalld.local edit configuration for sshd
+vi /etc/fail2ban/jail.">
 <link rel=stylesheet href="/css/styles.min.d839e31830b74ba5dc5840a9f182e1053ec682abaaec1550569f2320ba0a9235e4ca1c647858baa20a577c919cc3f8354021f306700ec4233a4d724ab3f17f08.css" integrity="sha512-2DnjGDC3S6XcWECp8YLhBT7Ggquq7BVQVp8jILoKkjXkyhxkeFi6ogpXfJGcw/g1QCHzBnAOxCM6TXJKs/F/CA==">
 <script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga('create','G-ZKBTJ4GP16','auto'),ga('send','pageview'))</script>
 <script async src=https://www.google-analytics.com/analytics.js></script>
@@ -57,21 +71,76 @@
 </nav>
 </header>
 <div id=content class=my-8>
-<div class=mb-8>
-<h1 class="font-bold text-2xl">2021</h1><ul class=my-2>
-<li class="mb-2 leading-relaxed list-item">
-<a href=/posts/install-and-configure-fail2ban-rocky-linux/ class="text-base border-b-2">Install and Configure Fail2ban Rocky Linux</a>
-<span class=text-xs>2021/12/03</span>
+<div class="collapsible-menu-wrapper my-8 p-4 border-2 rounded">
+<input id=collapse_btn_toc class="hidden collapse-btn-input" type=checkbox>
+<div class="flex justify-between">
+<span class=font-bold>Table of contents</span>
+<label for=collapse_btn_toc class=collapse-btn><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M10 17l5-5-5-5v10z"/><path d="M0 24V0h24v24H0z" fill="none"/></svg></label>
+</div>
+<div class="collapsible-menu text-sm ml-2">
+<div class=leading-6>
+<nav id=TableOfContents>
+<ul>
+<li>
+<ul>
+<li><a href=#firewall>Firewall</a></li>
+<li><a href=#install-fail2ban>Install Fail2ban</a></li>
+<li><a href=#configure-ssh-jail>Configure ssh jail</a></li>
+<li><a href=#unban-an-ip>Unban an IP</a></li>
+</ul>
 </li>
-<li class="mb-2 leading-relaxed list-item">
-<a href=/posts/firewalld-rocky-linux/ class="text-base border-b-2">Firewalld Rocky Linux</a>
-<span class=text-xs>2021/12/03</span>
-</li>
-<li class="mb-2 leading-relaxed list-item">
-<a href=/posts/theme-config/ class="text-base border-b-2">Theme Config</a>
-<span class=text-xs>2021/12/03</span>
-</li>
-</ul></div>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class=my-7>
+<article>
+<h1 id=install-and-configure-fali2ban-on-rocky-linux-8>Install and configure Fali2ban on Rocky Linux 8</h1>
+<blockquote>
+<p><em><strong>Run all commands bellow as root</strong></em></p>
+</blockquote>
+<h3 id=firewall>Firewall</h3>
+<p>Enable and start firewalld:</p>
+<p><code>systemctl enable firewalld && service firewalld start</code></p>
+<h3 id=install-fail2ban>Install Fail2ban</h3>
+<pre tabindex=0><code>dnf install -y epel-release 
+dnf install -y fail2ban fail2ban-firewalld
+</code></pre><p>Start and enable:</p>
+<pre tabindex=0><code>systemctl start fail2ban
+systemctl enable fail2ban
+</code></pre><p>Check if fail2ban is running:</p>
+<pre tabindex=0><code>systemctl status fail2ban
+</code></pre><h3 id=configure-ssh-jail>Configure ssh jail</h3>
+<pre tabindex=0><code>cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
+mv /etc/fail2ban/jail.d/00-firewalld.conf /etc/fail2ban/jail.d/00-firewalld.local
+</code></pre><p>edit configuration for sshd</p>
+<pre tabindex=0><code>vi /etc/fail2ban/jail.d/sshd.local
+</code></pre><p>put the following in it:</p>
+<pre tabindex=0><code>[sshd]
+enabled = true
+bantime = 1d
+maxretry = 3
+</code></pre><p>Restart and enable the jail:</p>
+<pre tabindex=0><code>systemctl restart fail2ban 
+</code></pre><p>Check if the jail is working:</p>
+<pre tabindex=0><code>fail2ban-client status sshd 
+</code></pre><p>It will output something like this:</p>
+<pre tabindex=0><code>Status for the jail: sshd
+|- Filter
+|  |- Currently failed:	1
+|  |- Total failed:	20
+|  `- Journal matches:	_SYSTEMD_UNIT=sshd.service + _COMM=sshd
+`- Actions
+   |- Currently banned:	2
+   |- Total banned:	2
+   `- Banned IP list:	49.88.112.73 120.133.56.246
+</code></pre><h3 id=unban-an-ip>Unban an IP</h3>
+<p>If you need to unban an IP for any reason:</p>
+<pre tabindex=0><code>fail2ban-client unban THE_IP_TO_UNBAN
+</code></pre>
+</article>
+</div>
 </div>
 <footer class="my-8 w-full text-center text-xs">
 <article>Copyright © 2021 by Dubs</article>
@@ -80,5 +149,6 @@
 <script src=/js/header.0b11855b871cb4d10c6c07b6723b9209f5c2bc9100735ab6ff47c8f9b76bb3d6ae41b488083b5fb15697987334039eb651b25c83228c29ac48a2bc168db8a894.js integrity="sha512-CxGFW4cctNEMbAe2cjuSCfXCvJEAc1q2/0fI+bdrs9auQbSICDtfsVaXmHM0A562UbJcgyKMKaxIorwWjbiolA=="></script>
 <script src=/js/zooming.10cfe42f65295a0596af3315b671956309ed1d20e299e476ca16f6f6b902421e29c6f81a8f9a7ce816f84bef0791dbad2e61e68ff8fe798bd9ce9e093756d084.js integrity="sha512-EM/kL2UpWgWWrzMVtnGVYwntHSDimeR2yhb29rkCQh4pxvgaj5p86Bb4S+8HkdutLmHmj/j+eYvZzp4JN1bQhA=="></script>
 <script src=/js/search-en-us.min.110f7629f848852187dfa9c547dd7160bfd9c809d519b82d32577e714d28b4b68039b33c6d5807ec917b6a2a26141e00c78a19d29ad6a98bb9d4076893d792cb.js integrity="sha512-EQ92KfhIhSGH36nFR91xYL/ZyAnVGbgtMld+cU0otLaAObM8bVgH7JF7aiomFB4Ax4oZ0prWqYu51Adok9eSyw=="></script>
+<script src=/js/code-copy-btn.3c5f29aad3ef5a0613149d1e108f38f08a5194f4f38774d20f0993208d436103657256e910a6a3ab9e8b70b537bfb82b6b3915b30bac5f39bef8259422ea5f62.js integrity="sha512-PF8pqtPvWgYTFJ0eEI848IpRlPTzh3TSDwmTII1DYQNlclbpEKajq56LcLU3v7grazkVswusXzm++CWUIupfYg=="></script>
 </body>
 </html>
