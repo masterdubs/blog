@@ -1,7 +1,7 @@
 ---
 title: "Firewalld Rocky Linux"
 date: 2021-12-03T10:38:00+04:00
-draft: true
+draft: false
 ---
 
 # Setup Firewalld with Rocky Linux 8 and limit by zone

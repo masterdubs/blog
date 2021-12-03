@@ -1,4 +1,4 @@
-baseURL = 'http://example.org/'
+baseURL = 'https://masterdubs.com/'
 languageCode = 'en-us'
 title = 'Dubs blog'
 theme = "hugo-theme-monochrome"
