@@ -125,7 +125,7 @@
       "dark_mode_btn",
       "delete-entire-zone",
       "firewall",
-      "install-and-configure-fali2ban-on-rocky-linux-8",
+      "install-and-configure-fail2ban-on-rocky-linux-8",
       "install-fail2ban",
       "light_mode_btn",
       "list-all-rules-in-zone",
