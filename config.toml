@@ -2,7 +2,7 @@ baseURL = 'https://masterdubs.com/'
 languageCode = 'en-us'
 title = 'Dubs blog'
 theme = "hugo-theme-monochrome"
-#googleAnalytics = "xxx"
+googleAnalytics = "G-ZKBTJ4GP16"
 
 [params]
 footer = "Copyright © 2021 by Dubs"
