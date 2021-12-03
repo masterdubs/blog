@@ -3,12 +3,14 @@ languageCode = 'en-us'
 title = 'Dubs blog'
 theme = "hugo-theme-monochrome"
 googleAnalytics = "G-ZKBTJ4GP16"
+enableEmoji = true
 
 [params]
-footer = "Copyright © 2021 by Dubs"
-enableCollapsibleTOC = true
-enableSiteSearch = true
-
+  footer = "Copyright © 2021 by Dubs"
+  enableCollapsibleTOC = true
+  enableSiteSearch = true
+  GitHubUser = "masterdubs"
+  AuthorName = "Dubs"
 
 
 [build]

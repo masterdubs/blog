@@ -3,9 +3,11 @@
     "tags": [
       "a",
       "article",
+      "blockquote",
       "body",
       "code",
       "div",
+      "em",
       "footer",
       "g",
       "h1",
@@ -27,6 +29,7 @@
       "pre",
       "script",
       "span",
+      "strong",
       "svg",
       "title",
       "ul"
@@ -116,10 +119,14 @@
       "TableOfContents",
       "collapse_btn_toc",
       "compile",
+      "configure-ssh-jail",
       "content",
       "create-a-new-zone-",
       "dark_mode_btn",
       "delete-entire-zone",
+      "firewall",
+      "install-and-configure-fali2ban-on-rocky-linux-8",
+      "install-fail2ban",
       "light_mode_btn",
       "list-all-rules-in-zone",
       "navbar",
@@ -138,7 +145,8 @@
       "serve",
       "setup-firewalld-with-rocky-linux-8-and-limit-by-zone",
       "start-a-new-post",
-      "theme-used"
+      "theme-used",
+      "unban-an-ip"
     ]
   }
 }
