@@ -4,7 +4,8 @@
 <meta name=viewport content="width=device-width,initial-scale=1">
 <title>Firewalld Rocky Linux - Dubs blog</title>
 <meta property="og:title" content="Firewalld Rocky Linux">
-<meta property="og:description" content="Setup Firewalld with Rocky Linux 8 and limit by zone Create a new zone : firewall-cmd --new-zone=myzone --permanent firewall-cmd --reload firewall-cmd --get-zones Restrict/Allow access firewall-cmd --zone=myzone --add-source=192.168.1.10/32 --permanent firewall-cmd --zone=myzone --add-port=443/tcp --permanent firewall-cmd --reload Or by service:
+<meta property="og:description" content="Setup Firewalld with Rocky Linux 8 and limit by zone Create a new zone : firewall-cmd --new-zone=myzone --permanent firewall-cmd --reload firewall-cmd --get-zones Restrict/Allow access by port:
+firewall-cmd --zone=myzone --add-source=192.168.1.10/32 --permanent firewall-cmd --zone=myzone --add-port=443/tcp --permanent firewall-cmd --reload Or by service:
 firewall-cmd --zone=myzone --add-source=192.168.1.10/32 --permanent firewall-cmd --zone=myzone --add-service=https --permanent firewall-cmd --reload List all rules in zone firewall-cmd --zone=myzone --list-all Remove source IP firewall-cmd --zone=myzone --remove-source=192.168.1.10/32 --permanent firewall-cmd --reload Remove port firewall-cmd --zone=myzone --remove-port=443/tcp --permanent firewall-cmd --reload Delete entire zone firewall-cmd --delete-zone=myzone --permanent firewall-cmd --reload ">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://masterdubs.com/posts/firewalld-rocky-linux/"><meta property="article:section" content="posts">
@@ -12,7 +13,8 @@ firewall-cmd --zone=myzone --add-source=192.168.1.10/32 --permanent firewall-cmd
 <meta property="article:modified_time" content="2021-12-03T10:38:00+04:00">
 <meta name=twitter:card content="summary">
 <meta name=twitter:title content="Firewalld Rocky Linux">
-<meta name=twitter:description content="Setup Firewalld with Rocky Linux 8 and limit by zone Create a new zone : firewall-cmd --new-zone=myzone --permanent firewall-cmd --reload firewall-cmd --get-zones Restrict/Allow access firewall-cmd --zone=myzone --add-source=192.168.1.10/32 --permanent firewall-cmd --zone=myzone --add-port=443/tcp --permanent firewall-cmd --reload Or by service:
+<meta name=twitter:description content="Setup Firewalld with Rocky Linux 8 and limit by zone Create a new zone : firewall-cmd --new-zone=myzone --permanent firewall-cmd --reload firewall-cmd --get-zones Restrict/Allow access by port:
+firewall-cmd --zone=myzone --add-source=192.168.1.10/32 --permanent firewall-cmd --zone=myzone --add-port=443/tcp --permanent firewall-cmd --reload Or by service:
 firewall-cmd --zone=myzone --add-source=192.168.1.10/32 --permanent firewall-cmd --zone=myzone --add-service=https --permanent firewall-cmd --reload List all rules in zone firewall-cmd --zone=myzone --list-all Remove source IP firewall-cmd --zone=myzone --remove-source=192.168.1.10/32 --permanent firewall-cmd --reload Remove port firewall-cmd --zone=myzone --remove-port=443/tcp --permanent firewall-cmd --reload Delete entire zone firewall-cmd --delete-zone=myzone --permanent firewall-cmd --reload ">
 <link rel=stylesheet href="/css/styles.min.d839e31830b74ba5dc5840a9f182e1053ec682abaaec1550569f2320ba0a9235e4ca1c647858baa20a577c919cc3f8354021f306700ec4233a4d724ab3f17f08.css" integrity="sha512-2DnjGDC3S6XcWECp8YLhBT7Ggquq7BVQVp8jILoKkjXkyhxkeFi6ogpXfJGcw/g1QCHzBnAOxCM6TXJKs/F/CA==">
 <script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga('create','G-ZKBTJ4GP16','auto'),ga('send','pageview'))</script>
@@ -94,6 +96,7 @@ firewall-cmd --zone=myzone --add-source=192.168.1.10/32 --permanent firewall-cmd
 firewall-cmd --reload
 firewall-cmd --get-zones
 </code></pre><h3 id=restrictallow-access>Restrict/Allow access</h3>
+<p>by port:</p>
 <pre tabindex=0><code>firewall-cmd --zone=myzone --add-source=192.168.1.10/32 --permanent
 firewall-cmd --zone=myzone --add-port=443/tcp  --permanent
 firewall-cmd --reload
