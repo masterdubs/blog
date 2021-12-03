@@ -1,4 +1,28 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Dubs blog</title><link>http://example.org/</link><description>Recent content on Dubs blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 03 Dec 2021 10:25:04 +0400</lastBuildDate><atom:link href="http://example.org/index.xml" rel="self" type="application/rss+xml"/><item><title>Theme Config</title><link>http://example.org/posts/theme-config/</link><pubDate>Fri, 03 Dec 2021 10:25:04 +0400</pubDate><guid>http://example.org/posts/theme-config/</guid><description>&lt;h2 id="quick-hugo-post-as-reminder">Quick hugo post as reminder&lt;/h2>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Dubs blog</title><link>https://masterdubs.com/</link><description>Recent content on Dubs blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 03 Dec 2021 10:38:00 +0400</lastBuildDate><atom:link href="https://masterdubs.com/index.xml" rel="self" type="application/rss+xml"/><item><title>Firewalld Rocky Linux</title><link>https://masterdubs.com/posts/firewalld-rocky-linux/</link><pubDate>Fri, 03 Dec 2021 10:38:00 +0400</pubDate><guid>https://masterdubs.com/posts/firewalld-rocky-linux/</guid><description>&lt;h1 id="setup-firewalld-with-rocky-linux-8-and-limit-by-zone">Setup Firewalld with Rocky Linux 8 and limit by zone&lt;/h1>
+&lt;h3 id="create-a-new-zone-">Create a new zone :&lt;/h3>
+&lt;pre tabindex="0">&lt;code>firewall-cmd --new-zone=myzone --permanent
+firewall-cmd --reload
+firewall-cmd --get-zones
+&lt;/code>&lt;/pre>&lt;h3 id="restrictallow-access">Restrict/Allow access&lt;/h3>
+&lt;pre tabindex="0">&lt;code>firewall-cmd --zone=myzone --add-source=192.168.1.10/32 --permanent
+firewall-cmd --zone=myzone --add-port=443/tcp --permanent
+firewall-cmd --reload
+&lt;/code>&lt;/pre>&lt;p>Or by service:&lt;/p>
+&lt;pre tabindex="0">&lt;code>firewall-cmd --zone=myzone --add-source=192.168.1.10/32 --permanent
+firewall-cmd --zone=myzone --add-service=https --permanent
+firewall-cmd --reload
+&lt;/code>&lt;/pre>&lt;h3 id="list-all-rules-in-zone">List all rules in zone&lt;/h3>
+&lt;pre tabindex="0">&lt;code>firewall-cmd --zone=myzone --list-all
+&lt;/code>&lt;/pre>&lt;h3 id="remove-source-ip">Remove source IP&lt;/h3>
+&lt;pre tabindex="0">&lt;code>firewall-cmd --zone=myzone --remove-source=192.168.1.10/32 --permanent
+firewall-cmd --reload
+&lt;/code>&lt;/pre>&lt;h3 id="remove-port">Remove port&lt;/h3>
+&lt;pre tabindex="0">&lt;code>firewall-cmd --zone=myzone --remove-port=443/tcp --permanent
+firewall-cmd --reload
+&lt;/code>&lt;/pre>&lt;h3 id="delete-entire-zone">Delete entire zone&lt;/h3>
+&lt;pre tabindex="0">&lt;code>firewall-cmd --delete-zone=myzone --permanent
+firewall-cmd --reload
+&lt;/code>&lt;/pre></description></item><item><title>Theme Config</title><link>https://masterdubs.com/posts/theme-config/</link><pubDate>Fri, 03 Dec 2021 10:25:04 +0400</pubDate><guid>https://masterdubs.com/posts/theme-config/</guid><description>&lt;h2 id="quick-hugo-post-as-reminder">Quick hugo post as reminder&lt;/h2>
 &lt;h3 id="start-a-new-post">Start a new post&lt;/h3>
 &lt;p>&lt;code>hugo new posts/post-name.md&lt;/code>&lt;/p>
 &lt;h3 id="serve">Serve&lt;/h3>

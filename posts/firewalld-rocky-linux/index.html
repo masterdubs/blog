@@ -2,22 +2,18 @@
 <meta charset=utf-8>
 <link rel="shortcut icon" href=https://masterdubs.com/favicon.ico type=image/x-icon>
 <meta name=viewport content="width=device-width,initial-scale=1">
-<title>Theme Config - Dubs blog</title>
-<meta property="og:title" content="Theme Config">
-<meta property="og:description" content="Quick hugo post as reminder Start a new post hugo new posts/post-name.md
-Serve hugo server -D
-Compile hugo --environment production --minify
-Theme used https://kaiiiz.github.io/hugo-theme-monochrome">
+<title>Firewalld Rocky Linux - Dubs blog</title>
+<meta property="og:title" content="Firewalld Rocky Linux">
+<meta property="og:description" content="Setup Firewalld with Rocky Linux 8 and limit by zone Create a new zone : firewall-cmd --new-zone=myzone --permanent firewall-cmd --reload firewall-cmd --get-zones Restrict/Allow access firewall-cmd --zone=myzone --add-source=192.168.1.10/32 --permanent firewall-cmd --zone=myzone --add-port=443/tcp --permanent firewall-cmd --reload Or by service:
+firewall-cmd --zone=myzone --add-source=192.168.1.10/32 --permanent firewall-cmd --zone=myzone --add-service=https --permanent firewall-cmd --reload List all rules in zone firewall-cmd --zone=myzone --list-all Remove source IP firewall-cmd --zone=myzone --remove-source=192.168.1.10/32 --permanent firewall-cmd --reload Remove port firewall-cmd --zone=myzone --remove-port=443/tcp --permanent firewall-cmd --reload Delete entire zone firewall-cmd --delete-zone=myzone --permanent firewall-cmd --reload ">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://masterdubs.com/posts/theme-config/"><meta property="article:section" content="posts">
-<meta property="article:published_time" content="2021-12-03T10:25:04+04:00">
-<meta property="article:modified_time" content="2021-12-03T10:25:04+04:00">
+<meta property="og:url" content="https://masterdubs.com/posts/firewalld-rocky-linux/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2021-12-03T10:38:00+04:00">
+<meta property="article:modified_time" content="2021-12-03T10:38:00+04:00">
 <meta name=twitter:card content="summary">
-<meta name=twitter:title content="Theme Config">
-<meta name=twitter:description content="Quick hugo post as reminder Start a new post hugo new posts/post-name.md
-Serve hugo server -D
-Compile hugo --environment production --minify
-Theme used https://kaiiiz.github.io/hugo-theme-monochrome">
+<meta name=twitter:title content="Firewalld Rocky Linux">
+<meta name=twitter:description content="Setup Firewalld with Rocky Linux 8 and limit by zone Create a new zone : firewall-cmd --new-zone=myzone --permanent firewall-cmd --reload firewall-cmd --get-zones Restrict/Allow access firewall-cmd --zone=myzone --add-source=192.168.1.10/32 --permanent firewall-cmd --zone=myzone --add-port=443/tcp --permanent firewall-cmd --reload Or by service:
+firewall-cmd --zone=myzone --add-source=192.168.1.10/32 --permanent firewall-cmd --zone=myzone --add-service=https --permanent firewall-cmd --reload List all rules in zone firewall-cmd --zone=myzone --list-all Remove source IP firewall-cmd --zone=myzone --remove-source=192.168.1.10/32 --permanent firewall-cmd --reload Remove port firewall-cmd --zone=myzone --remove-port=443/tcp --permanent firewall-cmd --reload Delete entire zone firewall-cmd --delete-zone=myzone --permanent firewall-cmd --reload ">
 <link rel=stylesheet href="/css/styles.min.d839e31830b74ba5dc5840a9f182e1053ec682abaaec1550569f2320ba0a9235e4ca1c647858baa20a577c919cc3f8354021f306700ec4233a4d724ab3f17f08.css" integrity="sha512-2DnjGDC3S6XcWECp8YLhBT7Ggquq7BVQVp8jILoKkjXkyhxkeFi6ogpXfJGcw/g1QCHzBnAOxCM6TXJKs/F/CA==">
 <script>localStorage.theme==='dark'||!('theme'in localStorage)&&window.matchMedia('(prefers-color-scheme: dark)').matches?document.documentElement.classList.add('dark'):document.documentElement.classList.remove('dark')</script>
 </head><body class="flex flex-col items-center w-full">
@@ -73,12 +69,14 @@ Theme used https://kaiiiz.github.io/hugo-theme-monochrome">
 <div class=leading-6>
 <nav id=TableOfContents>
 <ul>
-<li><a href=#quick-hugo-post-as-reminder>Quick hugo post as reminder</a>
+<li>
 <ul>
-<li><a href=#start-a-new-post>Start a new post</a></li>
-<li><a href=#serve>Serve</a></li>
-<li><a href=#compile>Compile</a></li>
-<li><a href=#theme-used>Theme used</a></li>
+<li><a href=#create-a-new-zone->Create a new zone :</a></li>
+<li><a href=#restrictallow-access>Restrict/Allow access</a></li>
+<li><a href=#list-all-rules-in-zone>List all rules in zone</a></li>
+<li><a href=#remove-source-ip>Remove source IP</a></li>
+<li><a href=#remove-port>Remove port</a></li>
+<li><a href=#delete-entire-zone>Delete entire zone</a></li>
 </ul>
 </li>
 </ul>
@@ -88,15 +86,31 @@ Theme used https://kaiiiz.github.io/hugo-theme-monochrome">
 </div>
 <div class=my-7>
 <article>
-<h2 id=quick-hugo-post-as-reminder>Quick hugo post as reminder</h2>
-<h3 id=start-a-new-post>Start a new post</h3>
-<p><code>hugo new posts/post-name.md</code></p>
-<h3 id=serve>Serve</h3>
-<p><code>hugo server -D</code></p>
-<h3 id=compile>Compile</h3>
-<p><code>hugo --environment production --minify</code></p>
-<h3 id=theme-used>Theme used</h3>
-<p><a href=https://kaiiiz.github.io/hugo-theme-monochrome>https://kaiiiz.github.io/hugo-theme-monochrome</a></p>
+<h1 id=setup-firewalld-with-rocky-linux-8-and-limit-by-zone>Setup Firewalld with Rocky Linux 8 and limit by zone</h1>
+<h3 id=create-a-new-zone->Create a new zone :</h3>
+<pre tabindex=0><code>firewall-cmd --new-zone=myzone --permanent 
+firewall-cmd --reload
+firewall-cmd --get-zones
+</code></pre><h3 id=restrictallow-access>Restrict/Allow access</h3>
+<pre tabindex=0><code>firewall-cmd --zone=myzone --add-source=192.168.1.10/32 --permanent
+firewall-cmd --zone=myzone --add-port=443/tcp  --permanent
+firewall-cmd --reload
+</code></pre><p>Or by service:</p>
+<pre tabindex=0><code>firewall-cmd --zone=myzone --add-source=192.168.1.10/32 --permanent
+firewall-cmd --zone=myzone --add-service=https  --permanent
+firewall-cmd --reload
+</code></pre><h3 id=list-all-rules-in-zone>List all rules in zone</h3>
+<pre tabindex=0><code>firewall-cmd --zone=myzone --list-all 
+</code></pre><h3 id=remove-source-ip>Remove source IP</h3>
+<pre tabindex=0><code>firewall-cmd --zone=myzone --remove-source=192.168.1.10/32 --permanent
+firewall-cmd --reload
+</code></pre><h3 id=remove-port>Remove port</h3>
+<pre tabindex=0><code>firewall-cmd --zone=myzone --remove-port=443/tcp --permanent
+firewall-cmd --reload
+</code></pre><h3 id=delete-entire-zone>Delete entire zone</h3>
+<pre tabindex=0><code>firewall-cmd --delete-zone=myzone --permanent
+firewall-cmd --reload
+</code></pre>
 </article>
 </div>
 </div>
@@ -107,5 +121,6 @@ Theme used https://kaiiiz.github.io/hugo-theme-monochrome">
 <script src=/js/header.0b11855b871cb4d10c6c07b6723b9209f5c2bc9100735ab6ff47c8f9b76bb3d6ae41b488083b5fb15697987334039eb651b25c83228c29ac48a2bc168db8a894.js integrity="sha512-CxGFW4cctNEMbAe2cjuSCfXCvJEAc1q2/0fI+bdrs9auQbSICDtfsVaXmHM0A562UbJcgyKMKaxIorwWjbiolA=="></script>
 <script src=/js/zooming.10cfe42f65295a0596af3315b671956309ed1d20e299e476ca16f6f6b902421e29c6f81a8f9a7ce816f84bef0791dbad2e61e68ff8fe798bd9ce9e093756d084.js integrity="sha512-EM/kL2UpWgWWrzMVtnGVYwntHSDimeR2yhb29rkCQh4pxvgaj5p86Bb4S+8HkdutLmHmj/j+eYvZzp4JN1bQhA=="></script>
 <script src=/js/search-en-us.min.110f7629f848852187dfa9c547dd7160bfd9c809d519b82d32577e714d28b4b68039b33c6d5807ec917b6a2a26141e00c78a19d29ad6a98bb9d4076893d792cb.js integrity="sha512-EQ92KfhIhSGH36nFR91xYL/ZyAnVGbgtMld+cU0otLaAObM8bVgH7JF7aiomFB4Ax4oZ0prWqYu51Adok9eSyw=="></script>
+<script src=/js/code-copy-btn.3c5f29aad3ef5a0613149d1e108f38f08a5194f4f38774d20f0993208d436103657256e910a6a3ab9e8b70b537bfb82b6b3915b30bac5f39bef8259422ea5f62.js integrity="sha512-PF8pqtPvWgYTFJ0eEI848IpRlPTzh3TSDwmTII1DYQNlclbpEKajq56LcLU3v7grazkVswusXzm++CWUIupfYg=="></script>
 </body>
 </html>
