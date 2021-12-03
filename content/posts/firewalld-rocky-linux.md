@@ -15,6 +15,7 @@ firewall-cmd --get-zones
 
 ### Restrict/Allow access
 
+by port: 
 ```
 firewall-cmd --zone=myzone --add-source=192.168.1.10/32 --permanent
 firewall-cmd --zone=myzone --add-port=443/tcp  --permanent
