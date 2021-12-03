@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Dubs blog</title><link>http://example.org/posts/</link><description>Recent content in Posts on Dubs blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 03 Dec 2021 10:25:04 +0400</lastBuildDate><atom:link href="http://example.org/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Theme Config</title><link>http://example.org/posts/theme-config/</link><pubDate>Fri, 03 Dec 2021 10:25:04 +0400</pubDate><guid>http://example.org/posts/theme-config/</guid><description>&lt;h2 id="quick-hugo-post-as-reminder">Quick hugo post as reminder&lt;/h2>
+&lt;h3 id="start-a-new-post">Start a new post&lt;/h3>
+&lt;p>&lt;code>hugo new posts/post-name.md&lt;/code>&lt;/p>
+&lt;h3 id="serve">Serve&lt;/h3>
+&lt;p>&lt;code>hugo server -D&lt;/code>&lt;/p>
+&lt;h3 id="compile">Compile&lt;/h3>
+&lt;p>&lt;code>hugo --environment production --minify&lt;/code>&lt;/p>
+&lt;h3 id="theme-used">Theme used&lt;/h3>
+&lt;p>&lt;a href="https://kaiiiz.github.io/hugo-theme-monochrome">https://kaiiiz.github.io/hugo-theme-monochrome&lt;/a>&lt;/p></description></item></channel></rss>
