@@ -4,7 +4,7 @@ date: 2021-12-03T13:23:23+04:00
 draft: false
 ---
 
-# Install and configure Fali2ban on Rocky Linux 8
+# Install and configure Fail2ban on Rocky Linux 8
 
 > ***Run all commands bellow as root*** 
 

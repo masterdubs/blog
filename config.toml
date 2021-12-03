@@ -2,7 +2,7 @@ baseURL = 'https://masterdubs.com/'
 languageCode = 'en-us'
 title = 'Dubs blog'
 theme = "hugo-theme-monochrome"
-googleAnalytics = "G-ZKBTJ4GP16"
+googleAnalytics = "G-2974LT1M3Z"
 enableEmoji = true
 
 [params]
