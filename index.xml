@@ -1,4 +1,19 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Dubs blog</title><link>https://masterdubs.com/</link><description>Recent content on Dubs blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 03 Dec 2021 13:23:23 +0400</lastBuildDate><atom:link href="https://masterdubs.com/index.xml" rel="self" type="application/rss+xml"/><item><title>Install and Configure Fail2ban Rocky Linux</title><link>https://masterdubs.com/posts/install-and-configure-fail2ban-rocky-linux/</link><pubDate>Fri, 03 Dec 2021 13:23:23 +0400</pubDate><guid>https://masterdubs.com/posts/install-and-configure-fail2ban-rocky-linux/</guid><description>&lt;h1 id="install-and-configure-fail2ban-on-rocky-linux-8">Install and configure Fail2ban on Rocky Linux 8&lt;/h1>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Dubs blog</title><link>https://masterdubs.com/</link><description>Recent content on Dubs blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 10 Dec 2021 22:30:19 +0400</lastBuildDate><atom:link href="https://masterdubs.com/index.xml" rel="self" type="application/rss+xml"/><item><title>Install Rust on Rocky Linux 8</title><link>https://masterdubs.com/posts/install-rust-rocky-linux-8/</link><pubDate>Fri, 10 Dec 2021 22:30:19 +0400</pubDate><guid>https://masterdubs.com/posts/install-rust-rocky-linux-8/</guid><description>&lt;h1 id="how-to-install-rust-programing-language-on-rocky-linux-8">How to install Rust programing language on Rocky linux 8&lt;/h1>
+&lt;h3 id="update-and-install-all-the-dependencies">Update and install all the dependencies:&lt;/h3>
+&lt;pre tabindex="0">&lt;code>sudo dnf update -y
+sudo dnf install -y epel-release
+sudo dnf install cmake gcc make curl clang -y
+&lt;/code>&lt;/pre>&lt;h3 id="install-rustup-nightly-release-and-the-nightly-webassembly">Install rustup, nightly release and the nightly WebAssembly&lt;/h3>
+&lt;pre tabindex="0">&lt;code>curl https://sh.rustup.rs -sSf | sh
+source ~/.cargo/env
+rustup default stable
+rustup update
+rustup update nightly
+rustup target add wasm32-unknown-unknown --toolchain nightly
+&lt;/code>&lt;/pre>&lt;h3 id="check-if-all-is-correct">Check if all is correct&lt;/h3>
+&lt;pre tabindex="0">&lt;code>rustc --version
+rustup show
+&lt;/code>&lt;/pre></description></item><item><title>Install and Configure Fail2ban Rocky Linux</title><link>https://masterdubs.com/posts/install-and-configure-fail2ban-rocky-linux/</link><pubDate>Fri, 03 Dec 2021 13:23:23 +0400</pubDate><guid>https://masterdubs.com/posts/install-and-configure-fail2ban-rocky-linux/</guid><description>&lt;h1 id="install-and-configure-fail2ban-on-rocky-linux-8">Install and configure Fail2ban on Rocky Linux 8&lt;/h1>
 &lt;blockquote>
 &lt;p>&lt;em>&lt;strong>Run all commands bellow as root&lt;/strong>&lt;/em>&lt;/p>
 &lt;/blockquote>
