@@ -6,7 +6,7 @@ googleAnalytics = "G-2974LT1M3Z"
 enableEmoji = true
 
 [params]
-  footer = "Copyright © 2021 by Dubs"
+  footer = "Copyright © 2022 by Dubs"
   enableCollapsibleTOC = true
   enableSiteSearch = true
   GitHubUser = "masterdubs"
