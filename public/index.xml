@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Dubs blog</title>
+    <link>https://masterdubs.com/</link>
+    <description>Recent content on Dubs blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 10 Dec 2021 22:30:19 +0400</lastBuildDate><atom:link href="https://masterdubs.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Install Rust on Rocky Linux 8</title>
+      <link>https://masterdubs.com/posts/install-rust-rocky-linux-8/</link>
+      <pubDate>Fri, 10 Dec 2021 22:30:19 +0400</pubDate>
+      
+      <guid>https://masterdubs.com/posts/install-rust-rocky-linux-8/</guid>
+      <description>&lt;h1 id=&#34;how-to-install-rust-programing-language-on-rocky-linux-8&#34;&gt;How to install Rust programing language on Rocky linux 8&lt;/h1&gt;
+&lt;h3 id=&#34;update-and-install-all-the-dependencies&#34;&gt;Update and install all the dependencies:&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo dnf update -y
+sudo dnf install -y epel-release
+sudo dnf install cmake gcc make curl clang -y
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;install-rustup-nightly-release-and-the-nightly-webassembly&#34;&gt;Install rustup, nightly release and the nightly WebAssembly&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;curl https://sh.rustup.rs -sSf | sh
+source ~/.cargo/env
+rustup default stable
+rustup update
+rustup update nightly
+rustup target add wasm32-unknown-unknown --toolchain nightly
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;check-if-all-is-correct&#34;&gt;Check if all is correct&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;rustc --version
+rustup show
+&lt;/code&gt;&lt;/pre&gt;</description>
+    </item>
+    
+    <item>
+      <title>Install and Configure Fail2ban Rocky Linux</title>
+      <link>https://masterdubs.com/posts/install-and-configure-fail2ban-rocky-linux/</link>
+      <pubDate>Fri, 03 Dec 2021 13:23:23 +0400</pubDate>
+      
+      <guid>https://masterdubs.com/posts/install-and-configure-fail2ban-rocky-linux/</guid>
+      <description>&lt;h1 id=&#34;install-and-configure-fail2ban-on-rocky-linux-8&#34;&gt;Install and configure Fail2ban on Rocky Linux 8&lt;/h1&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;Run all commands bellow as root&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;firewall&#34;&gt;Firewall&lt;/h3&gt;
+&lt;p&gt;Enable and start firewalld:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;systemctl enable firewalld &amp;amp;&amp;amp; service firewalld start&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id=&#34;install-fail2ban&#34;&gt;Install Fail2ban&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;dnf install -y epel-release 
+dnf install -y fail2ban fail2ban-firewalld
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Start and enable:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;systemctl start fail2ban
+systemctl enable fail2ban
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Check if fail2ban is running:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;systemctl status fail2ban
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;configure-ssh-jail&#34;&gt;Configure ssh jail&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
+mv /etc/fail2ban/jail.d/00-firewalld.conf /etc/fail2ban/jail.d/00-firewalld.local
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;edit configuration for sshd&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;vi /etc/fail2ban/jail.d/sshd.local
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;put the following in it:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[sshd]
+enabled = true
+bantime = 1d
+maxretry = 3
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Restart and enable the jail:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;systemctl restart fail2ban 
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Check if the jail is working:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;fail2ban-client status sshd 
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;It will output something like this:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Status for the jail: sshd
+|- Filter
+|  |- Currently failed:	1
+|  |- Total failed:	20
+|  `- Journal matches:	_SYSTEMD_UNIT=sshd.service + _COMM=sshd
+`- Actions
+   |- Currently banned:	2
+   |- Total banned:	2
+   `- Banned IP list:	49.88.112.73 120.133.56.246
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;unban-an-ip&#34;&gt;Unban an IP&lt;/h3&gt;
+&lt;p&gt;If you need to unban an IP for any reason:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;fail2ban-client unban THE_IP_TO_UNBAN
+&lt;/code&gt;&lt;/pre&gt;</description>
+    </item>
+    
+    <item>
+      <title>Firewalld Rocky Linux</title>
+      <link>https://masterdubs.com/posts/firewalld-rocky-linux/</link>
+      <pubDate>Fri, 03 Dec 2021 10:38:00 +0400</pubDate>
+      
+      <guid>https://masterdubs.com/posts/firewalld-rocky-linux/</guid>
+      <description>&lt;h1 id=&#34;setup-firewalld-with-rocky-linux-8-and-limit-by-zone&#34;&gt;Setup Firewalld with Rocky Linux 8 and limit by zone&lt;/h1&gt;
+&lt;h3 id=&#34;create-a-new-zone-&#34;&gt;Create a new zone :&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;firewall-cmd --new-zone=myzone --permanent 
+firewall-cmd --reload
+firewall-cmd --get-zones
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;restrictallow-access&#34;&gt;Restrict/Allow access&lt;/h3&gt;
+&lt;p&gt;by port:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;firewall-cmd --zone=myzone --add-source=192.168.1.10/32 --permanent
+firewall-cmd --zone=myzone --add-port=443/tcp  --permanent
+firewall-cmd --reload
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Or by service:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;firewall-cmd --zone=myzone --add-source=192.168.1.10/32 --permanent
+firewall-cmd --zone=myzone --add-service=https  --permanent
+firewall-cmd --reload
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;list-all-rules-in-zone&#34;&gt;List all rules in zone&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;firewall-cmd --zone=myzone --list-all 
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;remove-source-ip&#34;&gt;Remove source IP&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;firewall-cmd --zone=myzone --remove-source=192.168.1.10/32 --permanent
+firewall-cmd --reload
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;remove-port&#34;&gt;Remove port&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;firewall-cmd --zone=myzone --remove-port=443/tcp --permanent
+firewall-cmd --reload
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;delete-entire-zone&#34;&gt;Delete entire zone&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;firewall-cmd --delete-zone=myzone --permanent
+firewall-cmd --reload
+&lt;/code&gt;&lt;/pre&gt;</description>
+    </item>
+    
+    <item>
+      <title>Theme Config</title>
+      <link>https://masterdubs.com/posts/theme-config/</link>
+      <pubDate>Fri, 03 Dec 2021 10:25:04 +0400</pubDate>
+      
+      <guid>https://masterdubs.com/posts/theme-config/</guid>
+      <description>&lt;h2 id=&#34;quick-hugo-post-as-reminder&#34;&gt;Quick hugo post as reminder&lt;/h2&gt;
+&lt;h3 id=&#34;start-a-new-post&#34;&gt;Start a new post&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;hugo new posts/post-name.md&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id=&#34;serve&#34;&gt;Serve&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;hugo server -D&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id=&#34;compile&#34;&gt;Compile&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;hugo --environment production --minify&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id=&#34;theme-used&#34;&gt;Theme used&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://kaiiiz.github.io/hugo-theme-monochrome&#34;&gt;https://kaiiiz.github.io/hugo-theme-monochrome&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,264 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html class="h-full w-full font-sans" lang='en-us'><head>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href='https://masterdubs.com/favicon.ico' type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Firewalld Rocky Linux - Dubs blog</title>
+
+    
+
+    
+
+    
+
+    
+        <meta property="og:title" content="Firewalld Rocky Linux" />
+<meta property="og:description" content="Setup Firewalld with Rocky Linux 8 and limit by zone Create a new zone : firewall-cmd --new-zone=myzone --permanent firewall-cmd --reload firewall-cmd --get-zones Restrict/Allow access by port:
+firewall-cmd --zone=myzone --add-source=192.168.1.10/32 --permanent firewall-cmd --zone=myzone --add-port=443/tcp --permanent firewall-cmd --reload Or by service:
+firewall-cmd --zone=myzone --add-source=192.168.1.10/32 --permanent firewall-cmd --zone=myzone --add-service=https --permanent firewall-cmd --reload List all rules in zone firewall-cmd --zone=myzone --list-all Remove source IP firewall-cmd --zone=myzone --remove-source=192.168.1.10/32 --permanent firewall-cmd --reload Remove port firewall-cmd --zone=myzone --remove-port=443/tcp --permanent firewall-cmd --reload Delete entire zone firewall-cmd --delete-zone=myzone --permanent firewall-cmd --reload " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://masterdubs.com/posts/firewalld-rocky-linux/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-12-03T10:38:00+04:00" />
+<meta property="article:modified_time" content="2021-12-03T10:38:00+04:00" />
+
+
+    
+
+    
+        <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Firewalld Rocky Linux"/>
+<meta name="twitter:description" content="Setup Firewalld with Rocky Linux 8 and limit by zone Create a new zone : firewall-cmd --new-zone=myzone --permanent firewall-cmd --reload firewall-cmd --get-zones Restrict/Allow access by port:
+firewall-cmd --zone=myzone --add-source=192.168.1.10/32 --permanent firewall-cmd --zone=myzone --add-port=443/tcp --permanent firewall-cmd --reload Or by service:
+firewall-cmd --zone=myzone --add-source=192.168.1.10/32 --permanent firewall-cmd --zone=myzone --add-service=https --permanent firewall-cmd --reload List all rules in zone firewall-cmd --zone=myzone --list-all Remove source IP firewall-cmd --zone=myzone --remove-source=192.168.1.10/32 --permanent firewall-cmd --reload Remove port firewall-cmd --zone=myzone --remove-port=443/tcp --permanent firewall-cmd --reload Delete entire zone firewall-cmd --delete-zone=myzone --permanent firewall-cmd --reload "/>
+
+    <link rel="stylesheet" href="/css/styles.min.d839e31830b74ba5dc5840a9f182e1053ec682abaaec1550569f2320ba0a9235e4ca1c647858baa20a577c919cc3f8354021f306700ec4233a4d724ab3f17f08.css" integrity="sha512-2DnjGDC3S6XcWECp8YLhBT7Ggquq7BVQVp8jILoKkjXkyhxkeFi6ogpXfJGcw/g1QCHzBnAOxCM6TXJKs/F/CA==">
+
+
+
+    
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2974LT1M3Z"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-2974LT1M3Z', { 'anonymize_ip': false });
+}
+</script>
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'G-2974LT1M3Z', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+   
+  
+        
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'G-2974LT1M3Z', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+    
+
+    
+    <script>
+        
+            document.documentElement.classList.add('dark');
+        
+        
+        
+    </script>
+</head><body class="flex flex-col items-center w-full">
+        <main class="w-full sm:w-10/12 md:w-9/12 lg:w-7/12 xl:w-5/12 m-auto px-6"><header class="mt-9 mb-8">
+    <div class="flex justify-between items-center">
+        <div class="flex items-center">
+            <input id="navbar_btn" class="hidden" type="checkbox">
+            <label for="navbar_btn" class="menu-btn mr-4 items-center flex xl:hidden">
+                <span class="navicon"></span>
+            </label>
+            <a href="/" class="font-bold text-lg xl:text-2xl mr-auto">Dubs blog</a>
+        </div>
+
+        <div class="flex items-center">
+            
+            
+
+            
+
+            
+                <div class="ml-2 sep hidden sm:block"></div>
+                <div class="ml-2 relative flex items-center">
+                    <svg id="search_btn" class="cursor-pointer" width="18px" height="18px" viewBox="2 0 20 20"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></svg><div id="search_menu_wrapper" class="hidden justify-center fixed top-0 left-0 w-full h-full z-40">
+    <div id="search_menu" class="fixed flex flex-col w-full h-full sm:h-auto sm:top-24 sm:bottom-24 rounded-none sm:rounded-md sm:w-120 z-50">
+        <div class="flex min-h-10 shadow-md">
+            <div class="flex flex-grow">
+                <input id="search_menu_input" class="flex-grow focus:outline-none px-4 rounded-tl-md" type="text" placeholder=
+                Search&#32;Posts>
+            </div>
+            <div id="search_menu_close_btn" class="flex items-center justify-center w-10 rounded-tr-md cursor-pointer">
+                <svg width="14px" height="14px" viewBox="3 3 18 18"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></svg>
+            </div>
+        </div>
+        <div id="search_menu_results" class="flex-grow overflow-y-auto">
+        </div>
+    </div>
+</div>
+</div>
+            
+        </div>
+    </div>
+
+    <nav id="navbar" class="mt-3 hidden xl:block"><ul class="flex"></ul>
+    </nav>
+
+    <nav id="navbar_sm" class="mt-2 hidden">
+        <ul>
+            
+        </ul>
+
+        <hr class="my-4">
+    </nav>
+</header>
+<div id="content" class="my-8">
+                
+    
+    <div class="collapsible-menu-wrapper my-8 p-4 border-2 rounded">
+    
+        <input id="collapse_btn_toc" class="hidden collapse-btn-input" type="checkbox">
+    
+
+    <div class="flex justify-between">
+        <span class="font-bold">Table of contents</span>
+        
+            <label for="collapse_btn_toc" class="collapse-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M10 17l5-5-5-5v10z"/><path d="M0 24V0h24v24H0z" fill="none"/></svg></label>
+        
+    </div>
+
+    <div class="collapsible-menu text-sm ml-2">
+        
+            <div class="leading-6">
+                <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#create-a-new-zone-">Create a new zone :</a></li>
+        <li><a href="#restrictallow-access">Restrict/Allow access</a></li>
+        <li><a href="#list-all-rules-in-zone">List all rules in zone</a></li>
+        <li><a href="#remove-source-ip">Remove source IP</a></li>
+        <li><a href="#remove-port">Remove port</a></li>
+        <li><a href="#delete-entire-zone">Delete entire zone</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+            </div>
+        
+    </div>
+</div>
+
+
+
+    <div class="my-7">
+<article >
+    <h1 id="setup-firewalld-with-rocky-linux-8-and-limit-by-zone">Setup Firewalld with Rocky Linux 8 and limit by zone</h1>
+<h3 id="create-a-new-zone-">Create a new zone :</h3>
+<pre tabindex="0"><code>firewall-cmd --new-zone=myzone --permanent 
+firewall-cmd --reload
+firewall-cmd --get-zones
+</code></pre><h3 id="restrictallow-access">Restrict/Allow access</h3>
+<p>by port:</p>
+<pre tabindex="0"><code>firewall-cmd --zone=myzone --add-source=192.168.1.10/32 --permanent
+firewall-cmd --zone=myzone --add-port=443/tcp  --permanent
+firewall-cmd --reload
+</code></pre><p>Or by service:</p>
+<pre tabindex="0"><code>firewall-cmd --zone=myzone --add-source=192.168.1.10/32 --permanent
+firewall-cmd --zone=myzone --add-service=https  --permanent
+firewall-cmd --reload
+</code></pre><h3 id="list-all-rules-in-zone">List all rules in zone</h3>
+<pre tabindex="0"><code>firewall-cmd --zone=myzone --list-all 
+</code></pre><h3 id="remove-source-ip">Remove source IP</h3>
+<pre tabindex="0"><code>firewall-cmd --zone=myzone --remove-source=192.168.1.10/32 --permanent
+firewall-cmd --reload
+</code></pre><h3 id="remove-port">Remove port</h3>
+<pre tabindex="0"><code>firewall-cmd --zone=myzone --remove-port=443/tcp --permanent
+firewall-cmd --reload
+</code></pre><h3 id="delete-entire-zone">Delete entire zone</h3>
+<pre tabindex="0"><code>firewall-cmd --delete-zone=myzone --permanent
+firewall-cmd --reload
+</code></pre>
+</article>
+</div>
+
+
+                
+                    
+                
+            </div>
+<footer class="my-8 w-full text-center text-xs">
+    <article>Copyright © 2021 by Dubs</article>
+</footer>
+
+</main>
+<script src="/js/header.0b11855b871cb4d10c6c07b6723b9209f5c2bc9100735ab6ff47c8f9b76bb3d6ae41b488083b5fb15697987334039eb651b25c83228c29ac48a2bc168db8a894.js" integrity="sha512-CxGFW4cctNEMbAe2cjuSCfXCvJEAc1q2/0fI&#43;bdrs9auQbSICDtfsVaXmHM0A562UbJcgyKMKaxIorwWjbiolA=="></script>
+
+
+
+    <script src="/js/zooming.c201e2b2511d12764555ff0f7c0d5585ad015ac0663690450b00895582059d01aadecfd45240596f1b91705b8533aa586137cb605e20d76680144c5a5978b810.js" integrity="sha512-wgHislEdEnZFVf8PfA1Vha0BWsBmNpBFCwCJVYIFnQGq3s/UUkBZbxuRcFuFM6pYYTfLYF4g12aAFExaWXi4EA=="></script>
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    <script src="/js/search-en-us.min.4a23d261e785b1a8426969aefc3199789e8898f080fa7e8e72e3110dbb2ac5cc138bcc4d28abd89741a472e4949dc51baa90a4b796c3447d5657ebf8773eda40.js" integrity="sha512-SiPSYeeFsahCaWmu/DGZeJ6ImPCA&#43;n6OcuMRDbsqxcwTi8xNKKvYl0GkcuSUncUbqpCkt5bDRH1WV&#43;v4dz7aQA=="></script>
+
+
+
+
+    
+        <script src="/js/code-copy-btn.2cd1e4a3515ab936d5fc7466f6fefac81207b1ed2c9f767165dfd2d3da47667b1456cf70dffb9d7e8111b2d42afd9f49bb62a033b475ad123797ad3f7f5b97ac.js" integrity="sha512-LNHko1FauTbV/HRm9v76yBIHse0sn3ZxZd/S09pHZnsUVs9w3/udfoERstQq/Z9Ju2KgM7R1rRI3l60/f1uXrA=="></script>
+    
+
+</body>
+</html>
